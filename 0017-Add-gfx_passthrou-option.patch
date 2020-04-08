@@ -1,4 +1,4 @@
-From e7496e7eefe19c48406b2c3e8885888e4db26bdd Mon Sep 17 00:00:00 2001
+From 31321a6985e6a200b294b3f40955a2c51d954045 Mon Sep 17 00:00:00 2001
 From: Artur Puzio <cytadela8@users.noreply.github.com>
 Date: Tue, 7 Apr 2020 22:10:32 +0200
 Subject: [PATCH] Add gfx_passthrou option
@@ -27,7 +27,7 @@ index 23cfd74c21..b245210089 100644
          <optional>
            <ref name="emulator"/>
 diff --git a/src/conf/domain_conf.c b/src/conf/domain_conf.c
-index e8f78ab327..6d67ce90bf 100644
+index e8f78ab327..f21a43fc09 100644
 --- a/src/conf/domain_conf.c
 +++ b/src/conf/domain_conf.c
 @@ -20959,6 +20959,13 @@ virDomainDefParseXML(xmlDocPtr xml,
@@ -36,7 +36,7 @@ index e8f78ab327..6d67ce90bf 100644
  
 +    def->gfx_passthru = false;
 +    if ((tmp = virXPathString("string(./devices/@gfx_passthru)", ctxt)) != NULL) {
-+        if (STREQ(permissive, "yes"))
++        if (STREQ(tmp, "yes"))
 +            def->gfx_passthru = true;
 +        VIR_FREE(tmp);
 +    }
