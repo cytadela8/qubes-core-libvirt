@@ -1,4 +1,4 @@
-From ff5913487fa59608e2375e7c59dfb94b06e6641d Mon Sep 17 00:00:00 2001
+From e90cee1054584f0aa73a2fa0345c4967d6e0da49 Mon Sep 17 00:00:00 2001
 From: Artur Puzio <cytadela8@users.noreply.github.com>
 Date: Tue, 7 Apr 2020 22:10:32 +0200
 Subject: [PATCH] Add gfx_passthrou option
@@ -69,7 +69,7 @@ index abed8c966c..0ba7cb9d2e 100644
       * to handle support. A few assign specific data values to the option.
       * See virDomainDefFeaturesCheckABIStability() for details. */
 diff --git a/src/libxl/libxl_conf.c b/src/libxl/libxl_conf.c
-index 27de67d266..f5f82f1420 100644
+index 27de67d266..f8f023d976 100644
 --- a/src/libxl/libxl_conf.c
 +++ b/src/libxl/libxl_conf.c
 @@ -681,6 +681,8 @@ libxlMakeDomBuildInfo(virDomainDefPtr def,
@@ -77,7 +77,7 @@ index 27de67d266..f5f82f1420 100644
          }
  #endif
 +        if (def->gfx_passthru)
-+            b_info->u.hvm.gfx_passthru = true;
++            libxl_defbool_set(&b_info->u.hvm.gfx_passthru, 1);
      } else if (pvh) {
          b_info->cmdline = g_strdup(def->os.cmdline);
          b_info->kernel = g_strdup(def->os.kernel);
