@@ -1,4 +1,4 @@
-From f1ab1fbe72ec0ff396ef484c284b1e215bc5a638 Mon Sep 17 00:00:00 2001
+From 968bd7caf5169de3f6675c820c4af1a088ff35b6 Mon Sep 17 00:00:00 2001
 From: Artur Puzio <cytadela8@users.noreply.github.com>
 Date: Tue, 14 Apr 2020 15:12:38 +0200
 Subject: [PATCH] Add xen specific feature gfx_passthru
@@ -10,10 +10,10 @@ VM when an IGD is passed, but this option is not set.
 Signed-off-by: Artur Puzio <contact@puzio.waw.pl>
 ---
  docs/schemas/domaincommon.rng |  5 +++++
- src/conf/domain_conf.c        |  3 +++
+ src/conf/domain_conf.c        |  6 +++++-
  src/conf/domain_conf.h        |  1 +
  src/libxl/libxl_conf.c        | 13 +++++++++++++
- 4 files changed, 22 insertions(+)
+ 4 files changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/docs/schemas/domaincommon.rng b/docs/schemas/domaincommon.rng
 index 23cfd74c21..f7f24ca0b5 100644
@@ -32,10 +32,20 @@ index 23cfd74c21..f7f24ca0b5 100644
      </element>
    </define>
 diff --git a/src/conf/domain_conf.c b/src/conf/domain_conf.c
-index e8f78ab327..099fdaa39b 100644
+index e8f78ab327..deae8130f2 100644
 --- a/src/conf/domain_conf.c
 +++ b/src/conf/domain_conf.c
-@@ -20732,6 +20732,7 @@ virDomainDefParseXML(xmlDocPtr xml,
+@@ -208,7 +208,8 @@ VIR_ENUM_IMPL(virDomainKVM,
+ 
+ VIR_ENUM_IMPL(virDomainXen,
+               VIR_DOMAIN_XEN_LAST,
+-              "e820_host"
++              "e820_host",
++              "gfx_passthru"
+ );
+ 
+ VIR_ENUM_IMPL(virDomainMsrsUnknown,
+@@ -20732,6 +20733,7 @@ virDomainDefParseXML(xmlDocPtr xml,
  
              switch ((virDomainXen) feature) {
                  case VIR_DOMAIN_XEN_E820_HOST:
@@ -43,7 +53,7 @@ index e8f78ab327..099fdaa39b 100644
                      if (!(tmp = virXPathString("string(./@state)", ctxt))) {
                          virReportError(VIR_ERR_XML_ERROR,
                                         _("missing 'state' attribute for "
-@@ -22952,6 +22953,7 @@ virDomainDefFeaturesCheckABIStability(virDomainDefPtr src,
+@@ -22952,6 +22954,7 @@ virDomainDefFeaturesCheckABIStability(virDomainDefPtr src,
          for (i = 0; i < VIR_DOMAIN_XEN_LAST; i++) {
              switch ((virDomainXen) i) {
              case VIR_DOMAIN_XEN_E820_HOST:
@@ -51,7 +61,7 @@ index e8f78ab327..099fdaa39b 100644
                  if (src->xen_features[i] != dst->xen_features[i]) {
                      virReportError(VIR_ERR_CONFIG_UNSUPPORTED,
                                     _("State of Xen feature '%s' differs: "
-@@ -28495,6 +28497,7 @@ virDomainDefFormatFeatures(virBufferPtr buf,
+@@ -28495,6 +28498,7 @@ virDomainDefFormatFeatures(virBufferPtr buf,
              for (j = 0; j < VIR_DOMAIN_XEN_LAST; j++) {
                  switch ((virDomainXen) j) {
                  case VIR_DOMAIN_XEN_E820_HOST:
