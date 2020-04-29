@@ -1,0 +1,24 @@
+From ba068c4aeb37ed25e1b99b77529f0c7fcfd287ec Mon Sep 17 00:00:00 2001
+From: Artur Puzio <contact@puzio.waw.pl>
+Date: Wed, 29 Apr 2020 15:26:16 +0200
+Subject: [PATCH 2/2] libxl: Fix nographic
+
+---
+ src/libxl/libxl_conf.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/libxl/libxl_conf.c b/src/libxl/libxl_conf.c
+index a5605f6200..d17782b650 100644
+--- a/src/libxl/libxl_conf.c
++++ b/src/libxl/libxl_conf.c
+@@ -2417,6 +2417,7 @@ libxlMakeVideo(virDomainDefPtr def, libxl_domain_config *d_config)
+         b_info->video_memkb = def->videos[0]->vram;
+     } else {
+         libxl_defbool_set(&b_info->u.hvm.nographic, 1);
++        b_info->u.hvm.vga.kind = LIBXL_VGA_INTERFACE_TYPE_NONE;
+     }
+ 
+     return 0;
+-- 
+2.26.2
+
