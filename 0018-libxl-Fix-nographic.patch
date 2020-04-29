@@ -1,11 +1,13 @@
-From ba068c4aeb37ed25e1b99b77529f0c7fcfd287ec Mon Sep 17 00:00:00 2001
+From 43cc7728c6ba6fb54d63f15a13cb54f504a032f1 Mon Sep 17 00:00:00 2001
 From: Artur Puzio <contact@puzio.waw.pl>
 Date: Wed, 29 Apr 2020 15:26:16 +0200
 Subject: [PATCH 2/2] libxl: Fix nographic
 
 ---
- src/libxl/libxl_conf.c | 1 +
- 1 file changed, 1 insertion(+)
+ src/libxl/libxl_conf.c                               | 1 +
+ tests/libxlxml2domconfigdata/fullvirt-acpi-slic.json | 3 +++
+ tests/libxlxml2domconfigdata/fullvirt-cpuid.json     | 3 +++
+ 3 files changed, 7 insertions(+)
 
 diff --git a/src/libxl/libxl_conf.c b/src/libxl/libxl_conf.c
 index a5605f6200..d17782b650 100644
@@ -19,6 +21,34 @@ index a5605f6200..d17782b650 100644
      }
  
      return 0;
+diff --git a/tests/libxlxml2domconfigdata/fullvirt-acpi-slic.json b/tests/libxlxml2domconfigdata/fullvirt-acpi-slic.json
+index e804389fea..f16b4a971a 100644
+--- a/tests/libxlxml2domconfigdata/fullvirt-acpi-slic.json
++++ b/tests/libxlxml2domconfigdata/fullvirt-acpi-slic.json
+@@ -20,6 +20,9 @@
+             "acpi": "True",
+             "acpi_firmware": "/path/to/slic.dat",
+             "nographic": "True",
++            "vga": {
++                "kind": "none"
++            },
+             "vnc": {
+                 "enable": "False"
+             },
+diff --git a/tests/libxlxml2domconfigdata/fullvirt-cpuid.json b/tests/libxlxml2domconfigdata/fullvirt-cpuid.json
+index d46b464642..ddc423bca7 100644
+--- a/tests/libxlxml2domconfigdata/fullvirt-cpuid.json
++++ b/tests/libxlxml2domconfigdata/fullvirt-cpuid.json
+@@ -27,6 +27,9 @@
+             "apic": "True",
+             "acpi": "True",
+             "nographic": "True",
++            "vga": {
++                "kind": "none"
++            },
+             "vnc": {
+                 "enable": "False"
+             },
 -- 
 2.26.2
 
